@@ -1,99 +1,99 @@
 ---
 name: ielts-dashboard
 description: |
-  IELTS 学习数据可视化 Dashboard。生成本地 HTML 网页，展示写作趋势图、四科雷达图、错题热力图、同义替换统计、考试倒计时。
-  触发方式：/ielts-dashboard、「Dashboard」「看数据」「打开数据面板」
+  IELTS learning data visualization dashboard. Generates a local HTML page showing writing score trends, a four-skill radar chart, an error heatmap, synonym stats, and the exam countdown.
+  Triggers: /ielts-dashboard, "dashboard", "show my data", "open the data panel"
 metadata:
   version: Pro
 ---
 
-# IELTS Dashboard — 学习数据可视化
+# IELTS Dashboard — Learning Data Visualization
 
-你负责生成并打开本地的 IELTS 学习数据可视化面板。
+You're responsible for generating and opening the local IELTS learning data dashboard.
 
-**你的工作很简单：调用 CLI 生成 Dashboard HTML，然后打开它。**
+**Your job is simple: call the CLI to generate the dashboard HTML, then open it.**
 
 ---
 
-## 执行流程
+## Execution Flow
 
-### Step 1：确保数据初始化
+### Step 1: Make sure data is initialized
 
 ```bash
 python3 ~/.claude/skills/shared/ielts_cli.py init
 ```
 
-### Step 2：生成 Dashboard
+### Step 2: Generate the dashboard
 
 ```bash
 python3 ~/.claude/skills/shared/ielts_cli.py dashboard
 ```
 
-### Step 3：打开浏览器
+### Step 3: Open it in the browser
 
 ```bash
 open ~/.ielts/dashboard.html
 ```
 
-### Step 4：告诉用户
+### Step 4: Tell the user
 
 ```markdown
-✅ Dashboard 已生成并打开！
+✅ Dashboard generated and opened!
 
-📊 你在浏览器中可以看到：
+📊 In your browser you can see:
 
-- 写作分数走势图（最近 10 篇）
+- Writing score trend chart (last 10 essays)
 
-- 四科雷达图（当前 vs 目标）
+- Four-skill radar chart (current vs. target)
 
-- 高频错误 Top 10
+- Top 10 frequent errors
 
-- 同义替换库统计
+- Synonym bank stats
 
-- 词汇复习概览
+- Vocabulary review overview
 
-- 距离考试天数 + 每日建议
+- Days until exam + daily recommendations
 
-路径：`~/.ielts/dashboard.html`
-刷新：在浏览器中刷新即可看到最新数据。
+Path: `~/.ielts/dashboard.html`
+To refresh: just reload the page in your browser to see the latest data.
 
-💾 提示：运行 `python3 ~/.claude/skills/shared/ielts_cli.py backup` 备份全部数据。
+💾 Tip: run `python3 ~/.claude/skills/shared/ielts_cli.py backup` to back up all your data.
 ```
 
 ---
 
-## 故障处理
+## Troubleshooting
 
-### 如果浏览器没自动打开
+### If the browser doesn't open automatically
 
-告诉用户手动打开：
+Tell the user to open it manually:
 
 ```bash
 open ~/.ielts/dashboard.html
 ```
 
-### 如果没有数据
+### If there's no data yet
 
-提醒用户：
+Remind the user:
 
 ```text
-Dashboard 里还没数据。先去做一次练习：
+There's no data in the dashboard yet. Go do a practice session first:
 
-- 批改一篇作文 → /ielts-writing
+- Grade an essay → /ielts-writing
 
-- 分析一篇阅读 → /ielts-reading
+- Analyze a reading passage → /ielts-reading
 
-- 分析一套听力 → /ielts-listening
+- Analyze a listening test → /ielts-listening
 
-有了数据后，再回来 `/ielts-dashboard`。
+Once you have data, come back to `/ielts-dashboard`.
 ```
 
 ---
 
-## 边界
+## Boundaries
 
-- 你只生成 Dashboard——不分析数据（那是 `/ielts-diagnosis` 的事）
+- You only generate the dashboard — you don't analyze the data (that's `/ielts-diagnosis`'s job)
 
-- 数据来源是 `~/.ielts/` 下的 JSON 文件
+- Data is sourced from the JSON files under `~/.ielts/`
 
-- Dashboard 是纯静态 HTML，不需要服务器
+- The dashboard is pure static HTML — no server needed

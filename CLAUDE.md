@@ -1,43 +1,41 @@
 # IELTS Claude Skills — Project Instructions
 
-## 项目概要
+## Project Overview
 
-8 个 Claude Code Skill 组成的雅思备考 AI 教练系统 vPro。
+An IELTS prep AI coaching system (vPro) made up of 8 Claude Code Skills.
 
-## 工作流程
+## Workflow
 
-### 日常开发
+### Day-to-day development
 
-- 工作目录：`/Users/xc/Documents/Obsidian Vaults/Notebook/Projects/ielts-claude-learn/ielts-claude-skills/`
+- Working directory: `D:\Ielts\`
 
-- 修改后推送到远端：`git push origin master`
+- No remote repository configured yet — this is a local-only working copy.
 
-- 远端仓库：`git@github.com:xuchi-0808/ielts-claude-skills.git`
+### When a usage issue comes up
 
-### 遇到使用问题时
+When a user runs into a problem while using a skill (a bug, missing feature, or UX issue), handle it as follows:
 
-当用户在使用 skill 过程中发现问题（bug、功能缺失、体验问题），按以下流程处理：
+1. Fix the issue in the working directory
 
-1. 在工作目录中修复问题
-
-2. 同步到 `~/.claude/skills/`：
+2. Sync to `~/.claude/skills/`:
 
    ```bash
    cp -r ielts ielts-writing ielts-reading ielts-speaking ielts-listening ielts-vocab ielts-diagnosis ielts-dashboard shared dashboard ~/.claude/skills/
    ```
 
-3. 提交并推送到远端：
+3. Commit locally (no remote to push to yet):
 
    ```bash
-   git add -A && git commit -m "<描述修改内容>" && git push origin master
+   git add -A && git commit -m "<description of the change>"
    ```
 
-4. 告知用户修复内容
+4. Tell the user what was fixed
 
-### 数据层
+### Data layer
 
-- CLI 脚本：`shared/ielts_cli.py`（Python stdlib-only）
+- CLI script: `shared/ielts_cli.py` (Python stdlib-only)
 
-- 用户数据存储在 `~/.ielts/`，纯本地，无云端
+- User data is stored in `~/.ielts/`, fully local, no cloud
 
-- CLI 路径在 skill 中引用为：`python3 ~/.claude/skills/shared/ielts_cli.py`
+- The CLI path is referenced within skills as: `python3 ~/.claude/skills/shared/ielts_cli.py`

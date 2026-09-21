@@ -1,211 +1,211 @@
 # IELTS Claude Skills · vPro
 
-> 一套跑在 Claude Code 上的雅思备考 AI 教练 skill。
-> **数据持久化、跨会话记忆、可视化 Dashboard、8 个 Skill 协同工作。**
+> A set of IELTS prep AI coach skills that run on Claude Code.
+> **Persistent data, cross-session memory, a visual dashboard, 8 skills working together.**
 
 ---
 
-## 这是什么
+## What is this
 
-8 个 [Claude Code Skill](https://docs.claude.com/en/docs/claude-code/skills)，构成一个完整的雅思备考助手：
+8 [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills) that form a complete IELTS prep assistant:
 
-| Skill | 干啥 | 触发词 |
+| Skill | What it does | Trigger words |
 |-------|------|--------|
-| `/ielts` | 路由入口 + 摸底 + 进度追踪 | 「我要备考雅思」「IELTS」 |
-| `/ielts-writing` | 写作四维批改 + 改写对比 + 审题 + 历史追踪 | 「批改作文」「帮我看看这篇」 |
-| `/ielts-reading` | 同义替换提取 + T/F/NG 拆解 + 错题诊断 + 同义替换库 | 「分析阅读」「这道为什么错」 |
-| `/ielts-speaking` | 5 个万能故事覆盖 80% Part 2 话题 + 练习追踪 | 「口语素材」「Part 2 准备」 |
-| `/ielts-listening` | 听力错题分析 + 精听训练 + 题型追踪 | 「听力」「错题」「精听」 |
-| `/ielts-vocab` | 间隔重复复习 + 同义替换专项 + 场景词汇包 | 「背单词」「词汇」「复习」 |
-| `/ielts-diagnosis` | 数据诊断 + 个人化备考计划 | 「诊断」「备考计划」 |
-| `/ielts-dashboard` | 可视化 Dashboard（趋势图/雷达图/错题热力图） | 「Dashboard」「看数据」 |
+| `/ielts` | Entry point + baseline assessment + progress tracking | "I want to prepare for IELTS", "IELTS" |
+| `/ielts-writing` | Four-criteria essay grading + rewrite comparison + task analysis + history tracking | "grade my essay", "check this essay for me" |
+| `/ielts-reading` | Synonym extraction + True/False/Not Given breakdown + mistake diagnosis + synonym bank | "analyze this reading", "why is this wrong" |
+| `/ielts-speaking` | 5 universal stories covering 80% of Part 2 topics + practice tracking | "speaking material", "Part 2 prep" |
+| `/ielts-listening` | Listening mistake analysis + intensive listening training + question-type tracking | "listening", "mistakes", "intensive listening" |
+| `/ielts-vocab` | Spaced-repetition review + synonym drills + topic vocab packs | "vocab review", "vocabulary", "review" |
+| `/ielts-diagnosis` | Data diagnosis + personalized study plan | "diagnosis", "study plan" |
+| `/ielts-dashboard` | Visual dashboard (trend charts / radar charts / mistake heatmap) | "dashboard", "show my data" |
 
-**vPro 新特性：**
+**vPro's new features:**
 
-- 数据持久化到 `~/.ielts/`——跨会话记忆
+- Data persisted to `~/.ielts/` — cross-session memory
 
-- **教练记忆系统：** 自动记录你的学习偏好、弱项模式、策略反馈，下次对话无缝衔接
+- **Coach memory system:** automatically records your learning preferences, weakness patterns, and strategy feedback, picking up seamlessly next time
 
-- 每篇作文自动归档，带评分历史
+- Every essay auto-archived with a scoring history
 
-- 错题本自动聚合高频错误标签
+- Mistake log auto-aggregates high-frequency error tags
 
-- 同义替换库跨篇累计，可搜索
+- Synonym bank accumulates across essays and is searchable
 
-- 间隔重复词汇训练（SM-2 算法）
+- Spaced-repetition vocab training (SM-2 algorithm)
 
-- 本地 HTML Dashboard：趋势图 / 雷达图 / 错题分布
+- Local HTML dashboard: trend charts / radar charts / mistake distribution
 
-- 数据驱动诊断 + 个人化训练计划
+- Data-driven diagnosis + personalized training plan
 
-- 一键备份 / 恢复
-
----
-
-## 适合谁
-
-- 备考雅思、想用 AI 当陪练的考生
-
-- 已经在用 Claude Code 的开发者
-
-- 想要进度追踪、错题本、可视化 Dashboard 的考生
+- One-click backup / restore
 
 ---
 
-## 安装
+## Who this is for
 
-### 前提
+- IELTS candidates who want an AI training partner
 
-你要先装好 [Claude Code](https://docs.claude.com/en/docs/claude-code)。
+- Developers already using Claude Code
 
-### 安装步骤
+- Candidates who want progress tracking, a mistake log, and a visual dashboard
+
+---
+
+## Installation
+
+### Prerequisite
+
+You need [Claude Code](https://docs.claude.com/en/docs/claude-code) installed first.
+
+### Steps
 
 ```bash
-# 1. 进入项目目录
+# 1. Enter the project directory
 
 cd ielts-claude-skills
 
-# 2. 复制所有 skill 到 Claude Code skills 目录
+# 2. Copy all skills into the Claude Code skills directory
 
 cp -r ielts ielts-writing ielts-reading ielts-speaking \
       ielts-listening ielts-vocab ielts-diagnosis ielts-dashboard \
       shared dashboard \
       ~/.claude/skills/
 
-# 3. 初始化数据目录
+# 3. Initialize the data directory
 
 python3 ~/.claude/skills/shared/ielts_cli.py init
 
-# 4. 重启 Claude Code
+# 4. Restart Claude Code
 ```
 
-装完之后重启 Claude Code，输入 `/ielts` 就能用。
+Restart Claude Code after installing, then type `/ielts` to use it.
 
 ---
 
-## 怎么用
+## How to use it
 
-### 场景 1：什么都不知道，想被引导
+### Scenario 1: You don't know where to start and want guidance
 
 ```text
-你：/ielts
-AI：（问你 3 个问题：目标分、考试日期、今天想练啥）
-   → 路由到对应的子 skill
-   → 自动保存你的配置
+You: /ielts
+AI: (asks you 3 questions: target score, exam date, what you want to practice today)
+   → routes to the right sub-skill
+   → automatically saves your profile
 ```
 
-### 场景 2：直接批改作文
+### Scenario 2: Grade an essay directly
 
 ```text
-你：/ielts-writing
-   [粘贴题目 + 你的作文]
-AI：
+You: /ielts-writing
+   [paste the prompt + your essay]
+AI:
 
-- 四维评分（TR / CC / LR / GRA）
+- Four-criteria scoring (TR / CC / LR / GRA)
 
-- 句子级标注每个问题
+- Sentence-level annotation of every issue
 
-- 改写成目标分数版本
+- Rewrite at your target band score
 
-- 给提分优先级
+- Prioritized list of what to fix first
 
-- 自动保存到 ~/.ielts/writing/
+- Auto-saves to ~/.ielts/writing/
 ```
 
-### 场景 3：分析阅读错题
+### Scenario 3: Analyze reading mistakes
 
 ```text
-你：/ielts-reading
-   [粘贴文章 + 题目 + 你的答案 + 标准答案]
-AI：
+You: /ielts-reading
+   [paste the passage + questions + your answers + correct answers]
+AI:
 
-- 逐题拆解错因
+- Breaks down the cause of each wrong answer
 
-- 提取同义替换词表 → 自动入库
+- Extracts a synonym table → auto-added to your bank
 
-- T/F/NG 逻辑分析
+- True/False/Not Given logic analysis
 ```
 
-### 场景 4：听力错题分析
+### Scenario 4: Analyze listening mistakes
 
 ```text
-你：/ielts-listening
-   [粘贴题目 + 你的答案 + 正确答案]
-AI：
+You: /ielts-listening
+   [paste the questions + your answers + correct answers]
+AI:
 
-- Section 得分分析
+- Section-by-section score analysis
 
-- 错因分类（拼写/数字/没听到/干扰项）
+- Error classification (spelling / numbers / missed it / distractor)
 
-- 精听任务生成
+- Generates intensive-listening tasks
 ```
 
-### 场景 5：词汇复习
+### Scenario 5: Vocab review
 
 ```text
-你：/ielts-vocab
-AI：
+You: /ielts-vocab
+AI:
 
-- 推送今日到期词汇（间隔重复）
+- Pushes today's due vocab (spaced repetition)
 
-- 同义替换专项训练
+- Synonym drills
 
-- 按话题推送词汇包
+- Vocab packs by topic
 ```
 
-### 场景 6：查看学习数据
+### Scenario 6: View your learning data
 
 ```text
-你：/ielts-dashboard
-AI：
+You: /ielts-dashboard
+AI:
 
-- 生成本地 HTML Dashboard
+- Generates a local HTML dashboard
 
-- 自动在浏览器打开
+- Opens it in your browser automatically
 
-- 写作趋势图 / 四科雷达图 / 错题分布
+- Writing trend chart / four-skill radar chart / mistake distribution
 ```
 
-### 场景 7：诊断 + 备考计划
+### Scenario 7: Diagnosis + study plan
 
 ```text
-你：/ielts-diagnosis
-AI：
+You: /ielts-diagnosis
+AI:
 
-- 读取所有历史数据
+- Reads all historical data
 
-- 生成诊断报告
+- Generates a diagnosis report
 
-- 制定每日/每周训练计划
+- Builds a daily/weekly training plan
 ```
 
 ---
 
-## 文件结构
+## File structure
 
 ```text
 ielts-claude-skills/
-├── ielts/SKILL.md              # 路由教练
+├── ielts/SKILL.md              # routing coach
 
-├── ielts-writing/SKILL.md      # 写作批改
+├── ielts-writing/SKILL.md      # essay grading
 
-├── ielts-reading/SKILL.md      # 阅读分析
+├── ielts-reading/SKILL.md      # reading analysis
 
-├── ielts-speaking/SKILL.md     # 口语素材
+├── ielts-speaking/SKILL.md     # speaking material
 
-├── ielts-listening/SKILL.md    # 听力分析
+├── ielts-listening/SKILL.md    # listening analysis
 
-├── ielts-vocab/SKILL.md        # 词汇训练
+├── ielts-vocab/SKILL.md        # vocab training
 
-├── ielts-diagnosis/SKILL.md    # 诊断 + 备考计划
+├── ielts-diagnosis/SKILL.md    # diagnosis + study plan
 
-├── ielts-dashboard/SKILL.md    # Dashboard 生成
+├── ielts-dashboard/SKILL.md    # dashboard generation
 
 ├── shared/
-│   └── ielts_cli.py            # 数据层 CLI（Python stdlib）
+│   └── ielts_cli.py            # data layer CLI (Python stdlib)
 
 ├── dashboard/
-│   └── template.html           # Dashboard HTML 模板
+│   └── template.html           # dashboard HTML template
 
 ├── README.md
 └── LICENSE                     # MIT
@@ -213,36 +213,36 @@ ielts-claude-skills/
 
 ---
 
-## 数据存储
+## Data storage
 
-全部数据存储在 `~/.ielts/` 下：
+All data is stored under `~/.ielts/`:
 
 ```text
 ~/.ielts/
-├── config.json          # 用户配置
+├── config.json          # user config
 
-├── writing/             # 作文历史
+├── writing/             # essay history
 
-├── reading/             # 阅读记录
+├── reading/             # reading records
 
-├── listening/           # 听力记录
+├── listening/           # listening records
 
-├── speaking/            # 口语记录
+├── speaking/            # speaking records
 
-├── errors.json          # 错题本
+├── errors.json          # mistake log
 
-├── synonyms.json        # 同义替换库
+├── synonyms.json        # synonym bank
 
-├── progress.json        # 分数趋势
+├── progress.json        # score trends
 
-├── vocab.json           # 词汇 + 间隔重复数据
+├── vocab.json           # vocab + spaced-repetition data
 
-├── memories.json        # 教练记忆（偏好/弱项/策略）
+├── memories.json        # coach memory (preferences/weaknesses/strategies)
 
-└── dashboard.html       # 生成的 Dashboard
+└── dashboard.html       # generated dashboard
 ```
 
-**纯本地，无云端。** 用 `python3 ~/.claude/skills/shared/ielts_cli.py backup` 备份。
+**Fully local, no cloud.** Back up with `python3 ~/.claude/skills/shared/ielts_cli.py backup`.
 
 ---
 
@@ -252,6 +252,6 @@ ielts-claude-skills/
 
 ---
 
-## 反馈
+## Feedback
 
 Fork from [ielts-claude-skills](https://github.com/YANZHANLIN/ielts-claude-skills). Issues and PRs welcome on your own fork.
