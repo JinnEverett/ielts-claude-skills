@@ -10,7 +10,9 @@ An IELTS prep AI coaching system (vPro) made up of 8 Claude Code Skills.
 
 - Working directory: `D:\Ielts\`
 
-- No remote repository configured yet — this is a local-only working copy.
+- Push changes to remote: `git push origin master`
+
+- Remote repository: `https://github.com/JinnEverett/ielts-claude-skills.git`
 
 ### When a usage issue comes up
 
@@ -24,10 +26,10 @@ When a user runs into a problem while using a skill (a bug, missing feature, or 
    cp -r ielts ielts-writing ielts-reading ielts-speaking ielts-listening ielts-vocab ielts-diagnosis ielts-dashboard shared dashboard ~/.claude/skills/
    ```
 
-3. Commit locally (no remote to push to yet):
+3. Commit and push to remote:
 
    ```bash
-   git add -A && git commit -m "<description of the change>"
+   git add -A && git commit -m "<description of the change>" && git push origin master
    ```
 
 4. Tell the user what was fixed
