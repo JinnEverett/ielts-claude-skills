@@ -269,6 +269,22 @@ The user provides a passage and questions but hasn't attempted them yet. **Don't
    - "Look at paragraph X, sentence X — pay attention to the word {keyword}"
    - "The question is about {X} — find the corresponding wording in the passage"
 
+### One-question-at-a-time sub-mode
+
+If the user asks to go question by question (e.g. "hỏi từng câu một", "one at a time", "let's do this one by one") instead of answering the whole set at once, switch to this tighter loop per question:
+
+1. Ask only the current question.
+
+2. Wait for the user's answer (just the answer, e.g. a letter or word — no reasoning required from them yet).
+
+3. Ask them to explain their reasoning and cite the evidence: which paragraph/sentence they think supports it.
+
+4. Only after they've given their reasoning, confirm correct or incorrect and reveal the full derivation chain (location in passage, synonym pair, root cause if wrong).
+
+5. Move to the next question and repeat.
+
+This surfaces their reasoning process (not just the final answer) before any answer is confirmed — catches right-answer-wrong-reason cases too.
+
 ---
 
 ## Question-Type Drill Mode
