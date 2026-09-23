@@ -1,17 +1,18 @@
 # IELTS Claude Skills · vPro
 
 > A set of IELTS prep AI coach skills that run on Claude Code.
-> **Persistent data, cross-session memory, a visual dashboard, 8 skills working together.**
+> **Persistent data, cross-session memory, a visual dashboard, 9 skills working together.**
 
 ---
 
 ## What is this
 
-8 [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills) that form a complete IELTS prep assistant:
+9 [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills) that form a complete IELTS prep assistant:
 
 | Skill | What it does | Trigger words |
 |-------|------|--------|
 | `/ielts` | Entry point + baseline assessment + progress tracking | "I want to prepare for IELTS", "IELTS" |
+| `/ielts-pdf` | Converts a practice-test PDF (e.g. Cambridge IELTS) into markdown, split by skill, before any grading/analysis work | "setup đề", "setup this test", any `.pdf` exam book |
 | `/ielts-writing` | Four-criteria essay grading + rewrite comparison + task analysis + history tracking | "grade my essay", "check this essay for me" |
 | `/ielts-reading` | Synonym extraction + True/False/Not Given breakdown + mistake diagnosis + synonym bank | "analyze this reading", "why is this wrong" |
 | `/ielts-speaking` | 5 universal stories covering 80% of Part 2 topics + practice tracking | "speaking material", "Part 2 prep" |
@@ -67,7 +68,7 @@ cd ielts-claude-skills
 
 # 2. Copy all skills into the Claude Code skills directory
 
-cp -r ielts ielts-writing ielts-reading ielts-speaking \
+cp -r ielts ielts-pdf ielts-writing ielts-reading ielts-speaking \
       ielts-listening ielts-vocab ielts-diagnosis ielts-dashboard \
       shared dashboard \
       ~/.claude/skills/
@@ -187,6 +188,8 @@ AI:
 ielts-claude-skills/
 ├── ielts/SKILL.md              # routing coach
 
+├── ielts-pdf/SKILL.md          # PDF → markdown ingestion
+
 ├── ielts-writing/SKILL.md      # essay grading
 
 ├── ielts-reading/SKILL.md      # reading analysis
@@ -202,7 +205,8 @@ ielts-claude-skills/
 ├── ielts-dashboard/SKILL.md    # dashboard generation
 
 ├── shared/
-│   └── ielts_cli.py            # data layer CLI (Python stdlib)
+│   ├── ielts_cli.py            # data layer CLI (Python stdlib)
+│   └── pdf_to_md.py            # PDF → markdown converter (pymupdf + tesseract)
 
 ├── dashboard/
 │   └── template.html           # dashboard HTML template

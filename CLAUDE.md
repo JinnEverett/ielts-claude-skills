@@ -23,7 +23,7 @@ When a user runs into a problem while using a skill (a bug, missing feature, or 
 2. Sync to `~/.claude/skills/`:
 
    ```bash
-   cp -r ielts ielts-writing ielts-reading ielts-speaking ielts-listening ielts-vocab ielts-diagnosis ielts-dashboard shared dashboard ~/.claude/skills/
+   cp -r ielts ielts-pdf ielts-writing ielts-reading ielts-speaking ielts-listening ielts-vocab ielts-diagnosis ielts-dashboard shared dashboard ~/.claude/skills/
    ```
 
 3. Commit and push to remote:

@@ -1,1 +1,5 @@
 .claude/
+Cambridge 18/
+Cambridge*/
+*.pdf
+__pycache__/

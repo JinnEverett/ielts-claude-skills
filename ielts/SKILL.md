@@ -175,6 +175,8 @@ Update config after each answer.
 
 Smart detection:
 
+- User points at a `.pdf` exam book (Cambridge IELTS or similar) → go straight to `/ielts-pdf` first to convert it to markdown, then continue routing based on what the user wants to do with it
+
 - User pastes an essay without picking an option → go straight to `/ielts-writing`
 
 - User pastes a reading passage and questions → go straight to `/ielts-reading`
@@ -246,6 +248,7 @@ This means:
 
 | Command | Function | Triggers |
 |------|------|--------|
+| `/ielts-pdf` | Converts a practice-test PDF (e.g. Cambridge IELTS) into markdown, split by skill, before any grading/analysis work | "setup đề", "setup this test", "import Cambridge N", any `.pdf` exam book |
 | `/ielts-writing` | Four-criteria essay grading + rewrite comparison + prompt analysis + history tracking | "grade my essay", "take a look at this", "analyze this prompt" |
 | `/ielts-reading` | Synonym extraction + T/F/NG breakdown + paragraph structure + error log | "analyze this reading", "why did I get this wrong", "synonyms" |
 | `/ielts-speaking` | Topic grouping + universal stories + Part 3 prediction | "speaking material", "topic grouping", "universal story" |
