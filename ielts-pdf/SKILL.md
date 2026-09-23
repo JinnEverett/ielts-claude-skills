@@ -15,30 +15,49 @@ You convert an IELTS practice-test PDF into markdown **before** any grading/anal
 
 ---
 
+## Materials Folder Convention
+
+All practice-test source material lives under `D:\Ielts\materials\<Book Name>\` — this is the single place every skill looks. Layout:
+
+```text
+materials/
+└── Cambridge 18/
+    ├── Cambridge 18 - The IELTS Workshop/
+    │   ├── Cambridge 18.pdf         # original book (never committed)
+    │   └── AUDIO FILES/Test {1-4}/  # real listening audio, if the book included any
+    └── md/                          # output of this skill
+        ├── listening.md
+        ├── reading.md
+        ├── writing.md
+        └── speaking.md
+```
+
+When the user gives you a new PDF that isn't under `materials/` yet, move it there first (`materials/<Book Name>/...`, keeping any bundled audio folder alongside it) before converting — don't leave source books scattered elsewhere in the repo.
+
 ## Tool
 
 **Script:** `python3 ~/.claude/skills/shared/pdf_to_md.py`
 
 ```bash
-python3 ~/.claude/skills/shared/pdf_to_md.py "<path to book.pdf>"
+python3 ~/.claude/skills/shared/pdf_to_md.py "<path to book.pdf>" --out-dir "materials/<Book Name>/md"
 ```
 
-- Default output: a `md/` folder next to the PDF, with up to 4 files — `listening.md`, `reading.md`, `writing.md`, `speaking.md` — each grouped by `## Test N`.
+- Default output (no `--out-dir`): a `md/` folder next to the PDF itself. Books are usually nested one level deeper than that (`materials/<Book Name>/<Book Name> - .../book.pdf`), so **always pass `--out-dir` explicitly** to land output at the book level: `materials/<Book Name>/md/` — see the layout above.
+- Up to 4 output files — `listening.md`, `reading.md`, `writing.md`, `speaking.md` — each grouped by `## Test N`.
 - Auto-detects whether the PDF has a real text layer (fast path) or is a scanned image (falls back to OCR via Tesseract).
-- Idempotent: if the `md/` output is already newer than the PDF, it skips reconversion. Pass `--force` to redo it (e.g. after fixing a bad OCR pass).
-- `--out-dir DIR` to control output location if you don't want it next to the PDF.
+- Idempotent: if `--out-dir` already has output newer than the PDF, it skips reconversion. Pass `--force` to redo it (e.g. after fixing a bad OCR pass).
 
 ## Workflow
 
 ### Step 1: Locate the PDF
 
-If the user names a book (e.g. "Cambridge 18") but not a path, search for it before asking:
+Check `D:\Ielts\materials\<Book Name>\` first — if the book is already there, use that PDF directly. If the user names a book (e.g. "Cambridge 18") but it's not under `materials/` yet, search common locations (Desktop, Downloads, Documents, the working directory) before asking:
 
-```bash
-python3 -c "import glob,itertools" ; # or just search the working dir / common folders
+```powershell
+Get-ChildItem -Path "$env:USERPROFILE\Desktop","$env:USERPROFILE\Downloads","$env:USERPROFILE\Documents","D:\" -Recurse -Filter "<book name>*.pdf" -ErrorAction SilentlyContinue
 ```
 
-In practice: check the current project directory and common download locations for a file matching the name. Only ask the user for the path if you can't find it.
+If found outside `materials/`, move (don't copy) it into `materials/<Book Name>/`, bundled audio folder included, then convert. Only ask the user for a path if nothing turns up.
 
 ### Step 2: Check dependencies (first run only)
 
@@ -64,7 +83,7 @@ Confirm with the user before installing system-level software (Tesseract), per s
 ### Step 3: Run the conversion
 
 ```bash
-python3 ~/.claude/skills/shared/pdf_to_md.py "<path to book.pdf>"
+python3 ~/.claude/skills/shared/pdf_to_md.py "materials/<Book Name>/.../<book>.pdf" --out-dir "materials/<Book Name>/md"
 ```
 
 Large scanned books (100+ pages) take real time (roughly 5-10 seconds/page under OCR) — run it and let it finish; don't poll aggressively.
@@ -81,7 +100,7 @@ Then proceed with whatever the user actually wants (grade an essay, analyze read
 
 ### Step 5: Keep the repo clean
 
-Practice-test PDFs and their markdown output are copyrighted material — never commit them. The project `.gitignore` already excludes `*.pdf` and any `Cambridge*/` folder; if the book lives somewhere else, make sure its containing folder isn't tracked either.
+Practice-test PDFs and their markdown output are copyrighted material — never commit them. The project `.gitignore` already excludes the whole `materials/` folder; that's exactly why every book belongs under it (Step 1) rather than scattered elsewhere in the repo.
 
 ---
 

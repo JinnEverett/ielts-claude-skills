@@ -175,7 +175,7 @@ Update config after each answer.
 
 Smart detection:
 
-- User points at a `.pdf` exam book (Cambridge IELTS or similar) → go straight to `/ielts-pdf` first to convert it to markdown, then continue routing based on what the user wants to do with it
+- User points at a `.pdf` exam book, or names one by title (e.g. "Cambridge 18 Test 2"), without pasting content → go straight to `/ielts-pdf` first. All practice-test source material lives under `D:\Ielts\materials\<Book Name>\md\` (converted by `/ielts-pdf`) — check there before asking the user to paste anything
 
 - User pastes an essay without picking an option → go straight to `/ielts-writing`
 

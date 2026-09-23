@@ -80,6 +80,12 @@ python3 ~/.claude/skills/shared/ielts_cli.py synonym add \
 
 ---
 
+## Source Materials
+
+If the user references a book/test by name (e.g. "Cambridge 18 Test 2") instead of pasting a passage, don't ask them to paste it — look in `D:\Ielts\materials\<Book Name>\md\reading.md` (grouped by `## Test N`) first. If that file doesn't exist yet, run `/ielts-pdf` on the book, then continue here.
+
+---
+
 ## Three Modes
 
 | Mode | Trigger | What it does |

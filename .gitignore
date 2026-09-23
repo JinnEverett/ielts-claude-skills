@@ -1,5 +1,4 @@
 .claude/
-Cambridge 18/
-Cambridge*/
+materials/
 *.pdf
 __pycache__/

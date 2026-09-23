@@ -84,6 +84,12 @@ python3 ~/.claude/skills/shared/ielts_cli.py speaking add \
 
 ---
 
+## Source Materials
+
+If the user references a book/test by name instead of naming a topic, check `D:\Ielts\materials\<Book Name>\md\speaking.md` (grouped by `## Test N`) for that book's actual Part 1/2/3 topics before generating generic material — run `/ielts-pdf` first if it doesn't exist yet.
+
+---
+
 ## Three Modes
 
 | Mode | Trigger | What it does |

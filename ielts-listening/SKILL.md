@@ -54,6 +54,15 @@ python3 ~/.claude/skills/shared/ielts_cli.py listening add \
 
 ---
 
+## Source Materials
+
+If the user references a book/test by name (e.g. "Cambridge 18 Test 2") instead of pasting questions, check `D:\Ielts\materials\<Book Name>\` first — don't ask them to paste content that's already there:
+
+- `md/listening.md` (run `/ielts-pdf` first if it doesn't exist yet) has the questions, audioscripts, and answer keys, grouped by `## Test N`.
+- Point the user to the real audio for that test, e.g. `<Book Name> - The IELTS Workshop\AUDIO FILES\Test N\`, if the book bundled any. They should listen and answer for real before you grade — the audioscript text is the answer-key reference, never a substitute for actually listening.
+
+---
+
 ## Three Modes
 
 | Mode | Trigger | What it does |

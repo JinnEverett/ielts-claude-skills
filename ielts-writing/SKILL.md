@@ -77,6 +77,12 @@ python3 ~/.claude/skills/shared/ielts_cli.py error add --category writing --tag 
 
 ---
 
+## Source Materials
+
+If the user references a book/test by name instead of pasting the prompt, check `D:\Ielts\materials\<Book Name>\md\writing.md` (grouped by `## Test N`, includes sample answers) before asking them to paste it — run `/ielts-pdf` first if it doesn't exist yet.
+
+---
+
 ## Three Modes
 
 | Mode | Trigger | What it does |
