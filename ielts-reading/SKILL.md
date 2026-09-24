@@ -86,6 +86,30 @@ python3 ~/.claude/skills/shared/ielts_cli.py synonym add \
 
 If the user references a book/test by name (e.g. "Cambridge 18 Test 2") instead of pasting a passage, don't ask them to paste it — look in `D:\Ielts\materials\<Book Name>\md\reading.md` (grouped by `## Test N`) first. If that file doesn't exist yet, run `/ielts-pdf` on the book, then continue here.
 
+### Completed-passage tracking
+
+Never offer a passage the user has already done. Completed passages are stored as coaching-memory notes with a `DONE:` prefix.
+
+**Before suggesting or loading a passage**, look up what's done:
+
+```bash
+python3 ~/.claude/skills/shared/ielts_cli.py memory search --query "DONE:"
+```
+
+- Skip every passage listed there when recommending the next one
+- If the user says they already did a passage ("làm rồi", "already did this"), don't re-serve it: record it and move to the next undone passage in order (Test N → P1, P2, P3, then Test N+1)
+- If the user wants to re-do or review a done passage, that's fine — only skip it by default
+
+**Record a passage as done** (when the user says they finished it, or after an analysis is saved):
+
+```bash
+python3 ~/.claude/skills/shared/ielts_cli.py memory add \
+  --content "DONE: Cambridge 18 Test 1 Passage 1" \
+  --category note --skill reading --priority low
+```
+
+One note per passage, format exactly `DONE: <Book> Test <N> Passage <M>`, so the search above finds it.
+
 ---
 
 ## Three Modes
