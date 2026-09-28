@@ -286,11 +286,15 @@ Run the save commands immediately after finishing the report (see "Data Persiste
 
 ## Close-Reading Practice Mode
 
-The user provides a passage and questions but hasn't attempted them yet. **Don't give the answers directly.** Present the full passage once, then go through the questions **one at a time by default** — dumping the whole question list at once is hard to read and skips their reasoning process. Only answer the whole set in one go if the user explicitly asks for that instead (e.g. "cho hết câu hỏi luôn", "give me all the questions at once").
+The user provides a passage and questions but hasn't attempted them yet. **Don't give the answers directly.** Write the passage to a file, then go through the questions **one at a time by default** in the terminal — dumping the whole question list (or the full passage text) into the chat is hard to read. Only answer the whole set in one go if the user explicitly asks for that instead (e.g. "cho hết câu hỏi luôn", "give me all the questions at once").
+
+### Passage goes to a file, not the chat
+
+Any time a passage (or other long source text — a listening transcript, a speaking prompt, etc.) is being worked from, write it to `~/.ielts/reading/current_passage.md` (English only, with a `# {Book} — Test {N}, Passage {M} — {title}` header) instead of pasting it into the conversation. Tell the user the file path once so they can open it themselves. Everything interactive — questions, their answers, reasoning, feedback, derivation chains — stays in the chat/terminal. Overwrite that file each time a new passage starts.
 
 ### Default: one-question-at-a-time loop
 
-1. Show the full passage first, in English only — no per-paragraph translation (per SOUL, translation is added later only for sentences quoted during analysis/hints).
+1. Write the full passage to `~/.ielts/reading/current_passage.md` and point the user to it — don't paste it into the chat.
 
 2. Ask only the current question — not the full list.
 
