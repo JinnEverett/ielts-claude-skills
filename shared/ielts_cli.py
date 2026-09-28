@@ -25,6 +25,13 @@ from pathlib import Path
 from dataclasses import dataclass, asdict, field
 from typing import Optional
 
+# Windows consoles default stdout/stderr to cp1252, which can't encode IPA
+# symbols or Vietnamese text in vocab definitions. Force UTF-8 so output
+# never crashes regardless of the calling shell's code page.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8")
+
 # ── Paths ──────────────────────────────────────────────────────────
 IELTS_DIR = Path.home() / ".ielts"
 CONFIG_FILE = IELTS_DIR / "config.json"
