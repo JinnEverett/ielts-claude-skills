@@ -286,31 +286,29 @@ Run the save commands immediately after finishing the report (see "Data Persiste
 
 ## Close-Reading Practice Mode
 
-The user provides a passage and questions but hasn't attempted them yet. **Don't give the answers directly.** Guide them through it:
+The user provides a passage and questions but hasn't attempted them yet. **Don't give the answers directly.** Present the full passage once, then go through the questions **one at a time by default** — dumping the whole question list at once is hard to read and skips their reasoning process. Only answer the whole set in one go if the user explicitly asks for that instead (e.g. "cho hết câu hỏi luôn", "give me all the questions at once").
 
-1. Let them attempt it first and give their own answers
+### Default: one-question-at-a-time loop
 
-2. Once submitted, switch to Error Analysis mode
+1. Show the full passage first (with Vietnamese translation on any quoted excerpt, per SOUL).
 
-3. If they're stuck, give hints:
+2. Ask only the current question — not the full list.
+
+3. Wait for the user's answer (just the answer, e.g. a letter or word — no reasoning required from them yet).
+
+4. Ask them to explain their reasoning and cite the evidence: which paragraph/sentence they think supports it.
+
+5. Only after they've given their reasoning, confirm correct or incorrect and reveal the full derivation chain (location in passage, synonym pair, root cause if wrong).
+
+6. Move to the next question and repeat.
+
+This surfaces their reasoning process (not just the final answer) before any answer is confirmed — catches right-answer-wrong-reason cases too.
+
+If they're stuck, give hints instead of the answer:
    - "Look at paragraph X, sentence X — pay attention to the word {keyword}"
    - "The question is about {X} — find the corresponding wording in the passage"
 
-### One-question-at-a-time sub-mode
-
-If the user asks to go question by question (e.g. "hỏi từng câu một", "one at a time", "let's do this one by one") instead of answering the whole set at once, switch to this tighter loop per question:
-
-1. Ask only the current question.
-
-2. Wait for the user's answer (just the answer, e.g. a letter or word — no reasoning required from them yet).
-
-3. Ask them to explain their reasoning and cite the evidence: which paragraph/sentence they think supports it.
-
-4. Only after they've given their reasoning, confirm correct or incorrect and reveal the full derivation chain (location in passage, synonym pair, root cause if wrong).
-
-5. Move to the next question and repeat.
-
-This surfaces their reasoning process (not just the final answer) before any answer is confirmed — catches right-answer-wrong-reason cases too.
+Once all questions are done, switch to Error Analysis mode (Phase 4-6: synonym table, report, save).
 
 ---
 
