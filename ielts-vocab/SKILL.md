@@ -128,7 +128,9 @@ After the user self-rates, automatically call:
 python3 ~/.claude/skills/shared/ielts_cli.py vocab update --word "{word}" --quality {q}
 ```
 
-**Track every word scored below 4 in a running "recheck" list for this session.** Once the first pass through the due words is finished, quiz those recheck words again (same format: state part of speech, ask for definition + example, reveal, self-rate, run `vocab update` again with the new score) before showing the completion summary — don't wait for tomorrow's SM-2 schedule to reinforce a word that was shaky today. If a word is still below 4 on the recheck, it's fine to leave it for the next real session; don't loop indefinitely.
+**Scored below 3 → drill it immediately, right then, not later.** Quality <3 means SM-2 is resetting that word's interval anyway, so re-ask the same word (same format: state part of speech, ask for definition + example, reveal, self-rate, run `vocab update` again with the new score) right after revealing the answer, and keep repeating *that word* until the user scores ≥3 before moving on to the next word in the queue. Cap it at 3 immediate attempts — if still below 3 after that, log it, move on, and let it come back through the normal SM-2 schedule rather than looping forever.
+
+**Scored exactly 3 → add to a running "recheck" list for this session.** A 3 clears the SM-2 bar but was still effortful. Once the first pass through the due words is finished, quiz every word on the recheck list again before showing the completion summary — don't wait for tomorrow's SM-2 schedule to reinforce something that was shaky today. If a word is still below 4 on this recheck, that's fine, leave it for the next real session.
 
 ### Review completion summary
 
@@ -136,8 +138,9 @@ python3 ~/.claude/skills/shared/ielts_cli.py vocab update --word "{word}" --qual
 ## ✅ Review Complete
 
 **This session:** {n} words
-**Solid (≥4) after recheck:** {x} words
-**Still shaky (<4) after recheck:** {y} words → continue next session
+**Solid (≥4):** {x} words
+**Cleared at 3 after recheck:** {y} words
+**Still below 3 after 3 attempts:** {z} words → continue next session
 
 **Next review dates:**
 
