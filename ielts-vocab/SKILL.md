@@ -122,6 +122,8 @@ Interval calculation (handled automatically by `ielts_cli.py vocab update`):
 - Example: {example}
 - Synonyms: {synonyms}
 
+Show the `{definition}` field verbatim, exactly as stored — never paraphrase or retype it. Many entries lead with an IPA transcription (e.g. `/ˈskeptɪkl/`); dropping it silently defeats the point of having recorded it.
+
 **Your score (0-5):**
 
 After the user self-rates, automatically call:
