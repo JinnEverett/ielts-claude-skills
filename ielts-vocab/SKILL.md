@@ -128,9 +128,13 @@ After the user self-rates, automatically call:
 python3 ~/.claude/skills/shared/ielts_cli.py vocab update --word "{word}" --quality {q}
 ```
 
-**Scored below 3 → drill it immediately, right then, not later.** Quality <3 means SM-2 is resetting that word's interval anyway, so re-ask the same word (same format: state part of speech, ask for definition + example, reveal, self-rate, run `vocab update` again with the new score) right after revealing the answer, and keep repeating *that word* until the user scores ≥3 before moving on to the next word in the queue. Cap it at 3 immediate attempts — if still below 3 after that, log it, move on, and let it come back through the normal SM-2 schedule rather than looping forever.
+**Any word scored below 4 goes on a running "recheck" queue for this session — don't interrupt the first pass to redo it right away.** Finish asking through all the due words first, in order, exactly once each. Only after that first pass is done, work through the recheck queue.
 
-**Scored exactly 3 → add to a running "recheck" list for this session.** A 3 clears the SM-2 bar but was still effortful. Once the first pass through the due words is finished, quiz every word on the recheck list again before showing the completion summary — don't wait for tomorrow's SM-2 schedule to reinforce something that was shaky today. If a word is still below 4 on this recheck, that's fine, leave it for the next real session.
+**Recheck queue behavior:**
+- Word was scored exactly 3 → re-ask it once (same format: state part of speech, ask for definition + example, reveal, self-rate, run `vocab update` again with the new score). Whatever it scores this time, move on.
+- Word was scored below 3 → re-ask it, and if it's still below 3, ask it again — keep repeating that same word within the queue pass until it reaches ≥3, up to 3 attempts total. If still below 3 after 3 attempts, log it, move on, and let it come back through the normal SM-2 schedule rather than looping forever.
+
+Only show the completion summary once the recheck queue is fully cleared.
 
 ### Review completion summary
 
