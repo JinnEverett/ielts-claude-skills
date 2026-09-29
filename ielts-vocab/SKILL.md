@@ -128,15 +128,16 @@ After the user self-rates, automatically call:
 python3 ~/.claude/skills/shared/ielts_cli.py vocab update --word "{word}" --quality {q}
 ```
 
+**Track every word scored below 4 in a running "recheck" list for this session.** Once the first pass through the due words is finished, quiz those recheck words again (same format: state part of speech, ask for definition + example, reveal, self-rate, run `vocab update` again with the new score) before showing the completion summary — don't wait for tomorrow's SM-2 schedule to reinforce a word that was shaky today. If a word is still below 4 on the recheck, it's fine to leave it for the next real session; don't loop indefinitely.
+
 ### Review completion summary
 
 ```markdown
 ## ✅ Review Complete
 
 **This session:** {n} words
-**Solid (≥4):** {x} words
-**Okay (3):** {y} words
-**Needs redo (<3):** {z} words → continue tomorrow
+**Solid (≥4) after recheck:** {x} words
+**Still shaky (<4) after recheck:** {y} words → continue next session
 
 **Next review dates:**
 
