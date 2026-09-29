@@ -128,11 +128,9 @@ After the user self-rates, automatically call:
 python3 ~/.claude/skills/shared/ielts_cli.py vocab update --word "{word}" --quality {q}
 ```
 
-**Any word scored below 4 goes on a running "recheck" queue for this session — don't interrupt the first pass to redo it right away.** Finish asking through all the due words first, in order, exactly once each. Only after that first pass is done, work through the recheck queue.
+**Any word scored below 3 goes on a running "recheck" queue for this session — don't interrupt the first pass to redo it right away.** Finish asking through all the due words first, in order, exactly once each (a score of 3 or higher is fine as-is and needs no recheck). Only after that first pass is done, work through the recheck queue.
 
-**Recheck queue behavior:**
-- Word was scored exactly 3 → re-ask it once (same format: state part of speech, ask for definition + example, reveal, self-rate, run `vocab update` again with the new score). Whatever it scores this time, move on.
-- Word was scored below 3 → re-ask it, and if it's still below 3, ask it again — keep repeating that same word within the queue pass until it reaches ≥3, up to 3 attempts total. If still below 3 after 3 attempts, log it, move on, and let it come back through the normal SM-2 schedule rather than looping forever.
+**Recheck queue behavior:** re-ask the word (same format: state part of speech, ask for definition + example, reveal, self-rate, run `vocab update` again with the new score). If it's still below 3, ask it again — keep repeating that same word within the queue pass until it reaches ≥3, up to 3 attempts total. If still below 3 after 3 attempts, log it, move on, and let it come back through the normal SM-2 schedule rather than looping forever.
 
 Only show the completion summary once the recheck queue is fully cleared.
 
@@ -142,8 +140,8 @@ Only show the completion summary once the recheck queue is fully cleared.
 ## ✅ Review Complete
 
 **This session:** {n} words
-**Solid (≥4):** {x} words
-**Cleared at 3 after recheck:** {y} words
+**Passed first try (≥3):** {x} words
+**Cleared on recheck:** {y} words
 **Still below 3 after 3 attempts:** {z} words → continue next session
 
 **Next review dates:**
