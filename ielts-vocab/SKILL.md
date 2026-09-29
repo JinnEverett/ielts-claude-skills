@@ -100,6 +100,8 @@ Interval calculation (handled automatically by `ielts_cli.py vocab update`):
 
 ### Review flow
 
+**Always state the word's part of speech (n/v/adj/adv) up front, before asking for the definition.** Many words have unrelated meanings across parts of speech (e.g. "fashion" as a verb — "to make/shape" — vs. the far more common noun "fashion" = trend/style), and without the part of speech the user will default to the meaning they already know instead of the one actually being tested. Read it off the definition's inline tag (e.g. "(v)", "(adj)") if present. New entries must always include this tag at the start of `--definition` (see Add Vocabulary Mode) so this never has to be guessed at review time. `ielts_cli.py` has no command to edit an existing word, so if an older entry is missing the tag, state the part of speech from context during review and fix it by editing that word's `"definition"` field directly in `~/.ielts/vocab.json`.
+
 ```markdown
 ## 📝 Today's Vocabulary Review
 
@@ -107,7 +109,7 @@ Interval calculation (handled automatically by `ielts_cli.py vocab update`):
 
 ### Word {i}/{n}
 
-**Word:** {word}
+**Word:** {word} ({part of speech})
 **Last reviewed:** {last_reviewed}
 
 *First ask the user to answer: definition + one example sentence*
@@ -189,6 +191,8 @@ The user can supply vocabulary through:
 
 Automatically linked to the synonym library ✅
 ```
+
+`ielts_cli.py` has no dedicated part-of-speech field, so fold the `{n/v/adj/adv}` tag into the start of the `--definition` string itself (e.g. `"(v) to make or shape something"`) — this is what the Spaced Review flow reads back out later.
 
 Run the CLI command to save once done.
 
